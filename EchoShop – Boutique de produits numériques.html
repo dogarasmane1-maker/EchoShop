@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>EchoShop – Des produits numériques qui font la différence.</title>
+<meta name="description" content="EchoShop : e-books, templates, formations et ressources numériques de qualité. Téléchargement immédiat après paiement.">
+<style>
+:root{--p:#4F46E5;--a:#F59E0B;--bg:#F8FAFC;--tx:#0F172A;--mu:#64748B;--ok:#16A34A}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--tx);line-height:1.5}
+header{position:sticky;top:0;background:#fff;border-bottom:1px solid #e2e8f0;z-index:10}
+.wrap{max-width:1140px;margin:auto;padding:0 16px}
+.nav{display:flex;align-items:center;gap:16px;height:64px}
+.logo{font-weight:800;font-size:1.4rem;color:var(--p);cursor:pointer}
+.logo span{color:var(--a)}
+.search{flex:1;max-width:420px}
+.search input{width:100%;padding:10px 14px;border:1px solid #cbd5e1;border-radius:10px;font:inherit}
+nav a{color:var(--tx);text-decoration:none;font-weight:500;margin-left:14px;cursor:pointer;font-size:.95rem;white-space:nowrap}
+.badge-c{background:var(--a);color:#fff;border-radius:99px;padding:0 7px;font-size:.75rem;margin-left:4px}
+.btn{display:inline-block;background:var(--p);color:#fff;border:0;border-radius:10px;padding:12px 20px;font:inherit;font-weight:600;cursor:pointer}
+.btn:hover{opacity:.9}.btn.alt{background:var(--a)}.btn.ghost{background:#fff;color:var(--p);border:1px solid var(--p)}
+.btn.sm{padding:6px 12px;font-size:.85rem}.btn.danger{background:#DC2626}
+.hero{background:linear-gradient(135deg,#4F46E5,#7C3AED);color:#fff;border-radius:20px;padding:56px 32px;margin:24px 0;text-align:center}
+.hero h1{font-size:2.4rem;margin:0 0 8px}.hero p{opacity:.92;max-width:640px;margin:0 auto 24px}
+h2{font-size:1.5rem;margin:40px 0 16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px}
+.card{background:#fff;border:1px solid #e2e8f0;border-radius:16px;overflow:hidden;display:flex;flex-direction:column;cursor:pointer;transition:transform .2s,box-shadow .2s}
+.card:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(15,23,42,.1)}
+.thumb{height:150px;display:flex;align-items:center;justify-content:center;font-size:3.5rem;position:relative;background:#EEF2FF}
+.tag{position:absolute;top:10px;left:10px;background:var(--a);color:#fff;font-size:.72rem;font-weight:700;padding:3px 8px;border-radius:6px}
+.tag.new{background:var(--ok)}
+.body{padding:14px;flex:1;display:flex;flex-direction:column;gap:6px}
+.cat{font-size:.78rem;color:var(--mu);text-transform:uppercase;letter-spacing:.04em}
+.price{font-weight:800;font-size:1.15rem}
+.old{text-decoration:line-through;color:var(--mu);font-size:.9rem;margin-right:6px}
+.stars{color:var(--a);font-size:.9rem}
+.pills{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.pill{border:1px solid #cbd5e1;background:#fff;border-radius:99px;padding:6px 14px;cursor:pointer;font:inherit;font-size:.9rem}
+.pill.on{background:var(--p);color:#fff;border-color:var(--p)}
+.box{background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:24px}
+.row{display:flex;gap:24px;flex-wrap:wrap}
+.row>*{flex:1 1 300px}
+input,select,textarea{font:inherit;padding:10px 12px;border:1px solid #cbd5e1;border-radius:8px;width:100%;margin:4px 0 12px}
+table{width:100%;border-collapse:collapse}
+td,th{padding:10px;border-bottom:1px solid #e2e8f0;text-align:left;font-size:.92rem}
+.feat{text-align:center}.feat b{font-size:2rem;display:block}
+footer{margin-top:64px;background:#0F172A;color:#cbd5e1;padding:32px 0;font-size:.9rem}
+footer a{color:#cbd5e1;margin-right:14px;cursor:pointer}
+.muted{color:var(--mu)}.ok{color:var(--ok);font-weight:600}
+@media(max-width:720px){.hero h1{font-size:1.7rem}nav a{margin-left:8px}.search{display:none}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap nav">
+    <div class="logo" onclick="go('#/')">Echo<span>Shop</span></div>
+    <div class="search"><input id="q" placeholder="Rechercher produits, catégories, mots-clés…" oninput="go('#/search?q='+encodeURIComponent(this.value))"></div>
+    <nav>
+      <a onclick="go('#/shop')">Boutique</a>
+      <a onclick="go('#/account')">Mon compte</a>
+      <a onclick="go('#/cart')">Panier<span class="badge-c" id="cc">0</span></a>
+      <a onclick="go('#/admin')">Admin</a>
+    </nav>
+  </div>
+</header>
+<main class="wrap" id="app"></main>
+<footer>
+  <div class="wrap">
+    <div class="logo" style="color:#fff">Echo<span>Shop</span></div>
+    <p>« Des produits numériques qui font la différence. »</p>
+    <a onclick="go('#/page/about')">À propos</a><a onclick="go('#/page/faq')">FAQ</a><a onclick="go('#/page/contact')">Contact</a>
+    <a onclick="go('#/page/cgv')">CGV</a><a onclick="go('#/page/privacy')">Confidentialité</a><a onclick="go('#/page/refund')">Remboursement</a>
+  </div>
+</footer>
+
+<script>
+/* ---------- Données (à remplacer par une base de données) ---------- */
+let CATS=["E-books","Templates","Formations","Documents professionnels","Designs","Présentations","Fichiers numériques","Ressources pour créateurs","Autres produits numériques"];
+let products=[
+ {id:1,name:"Guide complet du marketing digital",cat:"E-books",price:9000,old:12000,icon:"📘",badge:"promo",rating:4.8,reviews:124,desc:"Un guide pratique de 200 pages pour lancer et développer votre stratégie digitale, étape par étape.",file:"guide-marketing.pdf",preview:"Aperçu : 10 premières pages"},
+ {id:2,name:"Pack de 20 templates Notion",cat:"Templates",price:15000,old:null,icon:"🗂️",badge:"new",rating:4.6,reviews:58,desc:"Templates prêts à l'emploi pour organiser vos projets, votre budget et vos objectifs.",file:"templates-notion.zip",preview:"Aperçu : 3 templates en vidéo"},
+ {id:3,name:"Formation Excel pour l'entreprise",cat:"Formations",price:25000,old:30000,icon:"🎓",badge:"promo",rating:4.9,reviews:210,desc:"Formation vidéo complète : tableaux croisés, formules avancées et tableaux de bord.",file:"formation-excel.zip",preview:"Aperçu : leçon 1 gratuite"},
+ {id:4,name:"Modèles de contrats professionnels",cat:"Documents professionnels",price:12000,old:null,icon:"📄",badge:"",rating:4.7,reviews:85,desc:"Contrats de prestation, de travail freelance et de confidentialité, modifiables en Word.",file:"contrats.docx",preview:"Aperçu : sommaire du pack"},
+ {id:5,name:"Kit d'icônes et UI design",cat:"Designs",price:8000,old:null,icon:"🎨",badge:"new",rating:4.5,reviews:40,desc:"Plus de 300 icônes vectorielles et composants d'interface pour vos maquettes.",file:"kit-ui.fig.zip",preview:"Aperçu : galerie d'icônes"},
+ {id:6,name:"Pack présentations pitch deck",cat:"Présentations",price:10000,old:null,icon:"📊",badge:"",rating:4.7,reviews:66,desc:"10 présentations PowerPoint professionnelles pour lever des fonds ou convaincre vos clients.",file:"pitch-deck.pptx",preview:"Aperçu : 2 diapositives"},
+ {id:7,name:"Calendrier éditorial réseaux sociaux",cat:"Ressources pour créateurs",price:5000,old:null,icon:"🚀",badge:"new",rating:4.4,reviews:33,desc:"Planifiez 12 mois de publications pour Instagram, TikTok et LinkedIn.",file:"calendrier.xlsx",preview:"Aperçu : modèle de janvier"}
+];
+const PROMOS={ECHO10:.10,BIENVENUE:.15};
+let S={cart:[],orders:[],user:null,promo:null,customers:[{name:"Démo",email:"demo@echoshop.ci"}]};
+let F={cat:'',max:0,sort:'pop'};
+let AT='login', AD='prod';
+
+/* ---------- Utilitaires ---------- */
+const $=id=>document.getElementById(id);
+const P=id=>products.find(p=>p.id===id);
+const fmt=n=>n.toLocaleString('fr-FR')+' FCFA';
+const stars=r=>'★'.repeat(Math.round(r))+'☆'.repeat(5-Math.round(r));
+const sub=()=>S.cart.reduce((a,i)=>a+P(i.id).price*i.qty,0);
+const total=()=>Math.round(sub()*(1-(PROMOS[S.promo]||0)));
+const owns=id=>S.orders.some(o=>o.items.some(i=>i.id===id)&&(!S.user||o.email===S.user.email));
+const go=h=>{location.hash=h};
+const cnt=()=>{$('cc').textContent=S.cart.reduce((a,i)=>a+i.qty,0)};
+
+function addCart(id){const i=S.cart.find(x=>x.id===id); if(i) i.qty++; else S.cart.push({id,qty:1}); cnt();}
+function setQty(id,v){const i=S.cart.find(x=>x.id===id); i.qty=Math.max(1,+v||1); render();}
+function delItem(id){S.cart=S.cart.filter(x=>x.id!==id); render();}
+function applyPromo(){const c=$('pc').value.trim().toUpperCase(); if(PROMOS[c]){S.promo=c; render();} else {S.promo=null; $('pm').textContent='Code invalide.';}}
+
+/* ---------- Composants ---------- */
+const card=p=>`<div class="card" onclick="go('#/product/${p.id}')">
+  <div class="thumb">${p.icon}${p.badge?`<span class="tag ${p.badge==='new'?'new':''}">${p.badge==='new'?'Nouveau':'Promotion'}</span>`:''}</div>
+  <div class="body"><div class="cat">${p.cat}</div><b>${p.name}</b>
+  <div class="stars">${stars(p.rating)} <span class="muted">(${p.reviews})</span></div>
+  <div>${p.old?`<span class="old">${fmt(p.old)}</span>`:''}<span class="price">${fmt(p.price)}</span></div></div></div>`;
+
+/* ---------- Pages ---------- */
+function home(){
+  const pop=[...products].sort((a,b)=>b.reviews-a.reviews).slice(0,4);
+  const nou=[...products].reverse().slice(0,4);
+  return `<section class="hero"><h1>Bienvenue sur EchoShop</h1>
+  <p>Une boutique de produits numériques de qualité : e-books, templates, formations et ressources pour particuliers, professionnels et créateurs.</p>
+  <button class="btn alt" onclick="go('#/shop')">Découvrir les produits</button></section>
+  <div class="pills">${CATS.map(c=>`<button class="pill" onclick="F.cat='${c}';go('#/shop')">${c}</button>`).join('')}</div>
+  <h2>Produits populaires</h2><div class="grid">${pop.map(card).join('')}</div>
+  <h2>Nouveautés</h2><div class="grid">${nou.map(card).join('')}</div>
+  <h2>Pourquoi choisir EchoShop ?</h2>
+  <div class="grid">${[['⚡','Téléchargement immédiat'],['🔒','Paiement sécurisé'],['✅','Qualité vérifiée'],['🇨🇮','Mobile Money et cartes']].map(([i,t])=>`<div class="box feat"><b>${i}</b>${t}</div>`).join('')}</div>
+  <h2>Avis clients</h2>
+  <div class="grid">${[['Aminata K.','Des templates très pratiques, je les utilise chaque semaine.'],['Jean-Marc D.','Livraison instantanée et guide très clair. Je recommande.'],['Fatou S.','Interface simple, achat rapide avec Orange Money.']].map(([n,t])=>`<div class="box"><div class="stars">★★★★★</div><p>« ${t} »</p><b class="muted">${n}</b></div>`).join('')}</div>
+  <div class="box" style="text-align:center;margin:40px 0"><h2 style="margin-top:0">Trouvez votre prochain produit numérique</h2>
+  <button class="btn" onclick="go('#/shop')">Parcourir la boutique</button></div>`;
+}
+
+function shop(){
+  let l=products.filter(p=>(!F.cat||p.cat===F.cat)&&(!F.max||p.price<=F.max));
+  l.sort((a,b)=>F.sort==='pop'?b.reviews-a.reviews:F.sort==='asc'?a.price-b.price:F.sort==='desc'?b.price-a.price:b.id-a.id);
+  return `<h2>Boutique</h2>
+  <div class="row" style="align-items:center">
+    <div style="flex:3 1 400px"><div class="pills"><button class="pill ${!F.cat?'on':''}" onclick="F.cat='';render()">Toutes</button>${CATS.map(c=>`<button class="pill ${F.cat===c?'on':''}" onclick="F.cat='${c}';render()">${c}</button>`).join('')}</div></div>
+    <div style="flex:1 1 150px"><select onchange="F.max=+this.value;render()"><option value="0">Tous les prix</option><option value="10000">≤ 10 000 FCFA</option><option value="20000">≤ 20 000 FCFA</option></select></div>
+    <div style="flex:1 1 150px"><select onchange="F.sort=this.value;render()"><option value="pop">Popularité</option><option value="asc">Prix croissant</option><option value="desc">Prix décroissant</option><option value="new">Plus récents</option></select></div>
+  </div>
+  <div class="grid" style="margin-top:16px">${l.map(card).join('')||'<p class="muted">Aucun produit trouvé.</p>'}</div>`;
+}
+
+function search(q){
+  const s=q.toLowerCase().trim();
+  const l=products.filter(p=>!s||(p.name+' '+p.cat+' '+p.desc).toLowerCase().includes(s));
+  const cs=CATS.filter(c=>s&&c.toLowerCase().includes(s));
+  return `<h2>Résultats pour « ${q} »</h2>
+  ${cs.length?`<div class="pills">${cs.map(c=>`<button class="pill" onclick="F.cat='${c}';go('#/shop')">📁 ${c}</button>`).join('')}</div>`:''}
+  <div class="grid">${l.map(card).join('')||'<p class="muted">Aucun résultat.</p>'}</div>`;
+}
+
+function product(id){
+  const p=P(id); if(!p) return '<p>Produit introuvable.</p>';
+  const sim=products.filter(x=>x.cat===p.cat&&x.id!==p.id);
+  return `<div class="row" style="margin:24px 0">
+    <div class="thumb" style="font-size:7rem;border-radius:16px;min-height:300px;flex:1 1 300px">${p.icon}</div>
+    <div style="flex:1 1 360px">
+      <div class="cat">${p.cat}</div>
+      <h1 style="margin:4px 0;font-size:1.9rem">${p.name}</h1>
+      ${p.badge?`<span class="tag ${p.badge==='new'?'new':''}" style="position:static;display:inline-block">${p.badge==='new'?'Nouveau':'Promotion'}</span>`:''}
+      <div class="stars" style="margin-top:8px">${stars(p.rating)} <span class="muted">${p.rating}/5 · ${p.reviews} avis</span></div>
+      <div style="margin:12px 0">${p.old?`<span class="old">${fmt(p.old)}</span>`:''}<span class="price" style="font-size:1.8rem">${fmt(p.price)}</span></div>
+      <p>${p.desc}</p>
+      <p class="muted">📥 Téléchargement immédiat après paiement · Format : ${p.file.split('.').pop().toUpperCase()}</p>
+      <p class="muted">👁️ ${p.preview}</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px">
+        <button class="btn alt" onclick="addCart(${p.id});go('#/checkout')">Acheter maintenant</button>
+        <button class="btn" onclick="addCart(${p.id})">Ajouter au panier</button>
+      </div>
+      ${owns(p.id)?`<p class="ok">✔ Vous possédez déjà ce produit — <a style="cursor:pointer;color:var(--p)" onclick="go('#/downloads')">Mes téléchargements</a></p>`:''}
+    </div>
+  </div>
+  <h2>Avis et notation</h2>
+  <div class="grid">${[['Client vérifié','Très complet et bien structuré.'],['Client vérifié','Rapport qualité-prix excellent.']].map(([n,t])=>`<div class="box"><div class="stars">★★★★★</div><p>${t}</p><b class="muted">${n}</b></div>`).join('')}</div>
+  ${sim.length?`<h2>Produits similaires</h2><div class="grid">${sim.map(card).join('')}</div>`:''}`;
+}
+
+function cart(){
+  if(!S.cart.length) return `<h2>Votre panier</h2><p class="muted">Votre panier est vide.</p><button class="btn" onclick="go('#/shop')">Voir la boutique</button>`;
+  const rows=S.cart.map(i=>{const p=P(i.id);return `<tr><td>${p.icon} ${p.name}</td><td>${fmt(p.price)}</td>
+    <td><input type="number" min="1" value="${i.qty}" style="width:70px;margin:0" onchange="setQty(${i.id},this.value)"></td>
+    <td>${fmt(p.price*i.qty)}</td><td><button class="btn sm danger" onclick="delItem(${i.id})">Supprimer</button></td></tr>`}).join('');
+  return `<h2>Votre panier</h2>
+  <div class="box" style="overflow-x:auto"><table><tr><th>Produit</th><th>Prix</th><th>Qté</th><th>Total</th><th></th></tr>${rows}</table></div>
+  <div class="row" style="margin-top:20px">
+    <div class="box"><b>Code promotionnel</b>
+      <div style="display:flex;gap:8px"><input id="pc" placeholder="Ex : ECHO10" value="${S.promo||''}"><button class="btn" onclick="applyPromo()">Appliquer</button></div>
+      <p id="pm" class="muted">${S.promo?'Code '+S.promo+' appliqué':'Codes disponibles : ECHO10 (-10 %), BIENVENUE (-15 %)'}</p></div>
+    <div class="box"><p>Sous-total : ${fmt(sub())}</p><p>Réduction : -${fmt(sub()-total())}</p>
+      <p><b style="font-size:1.25rem">Total : ${fmt(total())}</b></p>
+      <button class="btn alt" style="width:100%" onclick="go('#/checkout')">Passer au paiement</button></div>
+  </div>`;
+}
+
+function checkout(){
+  if(!S.cart.length) return cart();
+  const methods=['Carte bancaire (Visa / Mastercard)','PayPal','Orange Money','MTN Mobile Money','Wave'];
+  const u=S.user||{name:'',email:''};
+  return `<h2>Paiement sécurisé</h2>
+  <div class="row">
+    <div class="box"><h3>Vos informations</h3>
+      <input id="cn" placeholder="Nom complet" value="${u.name}">
+      <input id="ce" type="email" placeholder="E-mail (pour vos téléchargements)" value="${u.email}">
+      <input id="cp" placeholder="Téléphone (Mobile Money)">
+      <h3>Moyen de paiement</h3>
+      ${methods.map((m,i)=>`<label style="display:block;margin:8px 0"><input type="radio" name="pm" value="${m}" ${i?'':'checked'} style="width:auto;margin-right:8px">${m}</label>`).join('')}
+    </div>
+    <div class="box"><h3>Récapitulatif</h3>
+      ${S.cart.map(i=>{const p=P(i.id);return `<p>${p.name} × ${i.qty} — ${fmt(p.price*i.qty)}</p>`}).join('')}
+      <p><b>Total : ${fmt(total())}</b></p>
+      <button class="btn alt" style="width:100%" onclick="pay()">Payer ${fmt(total())}</button>
+      <p class="muted" style="font-size:.85rem">🔒 Paiement simulé. En production : passerelle sécurisée (Stripe, PayPal, CinetPay, API Orange Money / MTN / Wave).</p>
+    </div>
+  </div>`;
+}
+
+function pay(){
+  const n=$('cn').value.trim(), e=$('ce').value.trim();
+  if(!n||!/^\S+@\S+\.\S+$/.test(e)){alert('Veuillez renseigner votre nom et un e-mail valide.');return;}
+  const m=document.querySelector('input[name=pm]:checked').value;
+  const o={id:1001+S.orders.length,date:new Date().toLocaleDateString('fr-FR'),email:e,name:n,method:m,
+           items:S.cart.map(i=>({...i})),total:total(),status:'Payée'};
+  S.orders.push(o);
+  if(!S.customers.find(c=>c.email===e)) S.customers.push({name:n,email:e});
+  S.cart=[]; S.promo=null;
+  go('#/confirm/'+o.id);
+}
+
+function orderConfirm(id){
+  const o=S.orders.find(x=>x.id===id); if(!o) return home();
+  return `<div class="box" style="max-width:720px;margin:32px auto;text-align:center">
+    <div style="font-size:3rem">✅</div>
+    <h2 style="margin-top:8px">Merci pour votre commande !</h2>
+    <p>Commande <b>#${o.id}</b> · ${o.date} · Statut : <span class="ok">${o.status}</span></p>
+    <p class="muted">Un e-mail de confirmation a été envoyé à ${o.email} (simulation).</p>
+    <hr style="border:0;border-top:1px solid #e2e8f0">
+    <h3>Vos téléchargements</h3>
+    ${o.items.map(i=>{const p=P(i.id);return `<div style="display:flex;justify-content:space-between;align-items:center;margin:10px 0;gap:8px"><span>${p.icon} ${p.name}</span><button class="btn sm" onclick="dl(${p.id})">Télécharger</button></div>`}).join('')}
+    <p class="muted" style="font-size:.85rem">Les liens restent disponibles dans « Mes téléchargements ».</p>
+    <button class="btn ghost" onclick="go('#/shop')">Continuer mes achats</button>
+  </div>`;
+}
+
+function account(){
+  if(!S.user) return `<div class="box" style="max-width:460px;margin:32px auto">
+    <div class="pills"><button class="pill ${AT==='login'?'on':''}" onclick="AT='login';render()">Connexion</button><button class="pill ${AT==='reg'?'on':''}" onclick="AT='reg';render()">Inscription</button></div>
+    ${AT==='reg'?'<input id="rn" placeholder="Nom complet">':''}
+    <input id="ae" type="email" placeholder="E-mail">
+    <input id="ap" type="password" placeholder="Mot de passe (8 caractères min.)">
+    <button class="btn" style="width:100%" onclick="auth()">${AT==='reg'?'Créer mon compte':'Se connecter'}</button>
+    <p class="muted" style="font-size:.85rem">Mot de passe oublié ? Un lien de réinitialisation vous sera envoyé par e-mail.</p></div>`;
+  const mine=S.orders.filter(o=>o.email===S.user.email);
+  return `<h2>Mon profil</h2>
+  <div class="row">
+    <div class="box"><p><b>${S.user.name}</b><br>${S.user.email}</p>
+      <h3>Gestion du mot de passe</h3>
+      <input type="password" id="np" placeholder="Nouveau mot de passe">
+      <button class="btn sm" onclick="alert('Mot de passe mis à jour (simulation).')">Mettre à jour</button><br><br>
+      <button class="btn ghost sm" onclick="S.user=null;render()">Se déconnecter</button></div>
+    <div class="box"><h3>Historique des commandes</h3>
+      ${mine.length?`<table><tr><th>N°</th><th>Date</th><th>Total</th><th>Statut</th></tr>${mine.map(o=>`<tr><td>#${o.id}</td><td>${o.date}</td><td>${fmt(o.total)}</td><td>${o.status}</td></tr>`).join('')}</table>`:'<p class="muted">Aucune commande.</p>'}
+      <br><button class="btn sm" onclick="go('#/downloads')">Mes téléchargements</button></div>
+  </div>`;
+}
+
+function auth(){
+  const e=$('ae').value.trim(), p=$('ap').value;
+  if(!/^\S+@\S+\.\S+$/.test(e)||p.length<8){alert('E-mail valide et mot de passe de 8 caractères minimum.');return;}
+  const name=AT==='reg'&&$('rn').value.trim()?$('rn').value.trim():e.split('@')[0];
+  S.user={name,email:e};
+  if(!S.customers.find(c=>c.email===e)) S.customers.push({name,email:e});
+  render();
+}
+
+function downloads(){
+  if(!S.user) return `<p>Connectez-vous pour accéder à vos téléchargements.</p><button class="btn" onclick="go('#/account')">Connexion</button>`;
+  const items=[...new Map(S.orders.filter(o=>o.email===S.user.email).flatMap(o=>o.items).map(i=>[i.id,i])).values()];
+  return `<h2>Mes téléchargements</h2>
+  ${items.length?`<div class="grid">${items.map(i=>{const p=P(i.id);return `<div class="box"><div style="font-size:2.5rem">${p.icon}</div><b>${p.name}</b>
+    <p class="muted" style="font-size:.85rem">Accès illimité</p><button class="btn sm" onclick="dl(${p.id})">Télécharger</button></div>`}).join('')}</div>`
+  :'<p class="muted">Aucun produit acheté pour le moment.</p>'}`;
+}
+
+/* Téléchargement : démonstration. En production, le serveur vérifie l'achat
+   et génère un lien signé à durée limitée vers le fichier stocké hors ligne. */
+function dl(id){
+  const p=P(id);
+  const b=new Blob([`EchoShop — ${p.name}\nFichier de démonstration.`],{type:'text/plain'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(b); a.download=p.file.replace(/\.[^.]+$/,'')+'-demo.txt'; a.click();
+}
+
+function admin(){
+  const tabs=[['prod','Produits'],['ord','Commandes'],['cust','Clients'],['cat','Catégories'],['stat','Statistiques']];
+  let body='';
+  if(AD==='prod') body=`<div style="overflow-x:auto"><table><tr><th>Produit</th><th>Catégorie</th><th>Prix</th><th>Ancien</th><th></th></tr>
+    ${products.map(p=>`<tr><td>${p.icon} ${p.name}</td><td>${p.cat}</td><td>${fmt(p.price)}</td><td>${p.old?fmt(p.old):'—'}</td>
+    <td style="white-space:nowrap"><button class="btn sm" onclick="editPrice(${p.id})">Prix / promo</button> <button class="btn sm danger" onclick="delP(${p.id})">Supprimer</button></td></tr>`).join('')}</table></div>
+    <h3>Ajouter un produit</h3>
+    <div class="row"><div>
+      <input id="nn" placeholder="Nom du produit">
+      <select id="nc">${CATS.map(c=>`<option>${c}</option>`).join('')}</select>
+      <input id="npx" type="number" placeholder="Prix (FCFA)">
+    </div><div>
+      <input id="nd" placeholder="Description">
+      <input id="ni" placeholder="Image : emoji (ex : 📘) ou URL">
+      <input id="nf" placeholder="Fichier numérique (ex : guide.pdf)">
+      <button class="btn" onclick="addP()">Ajouter le produit</button>
+    </div></div>`;
+  if(AD==='ord') body=`<div style="overflow-x:auto"><table><tr><th>N°</th><th>Client</th><th>Date</th><th>Total</th><th>Paiement</th><th>Statut</th></tr>
+    ${S.orders.map(o=>`<tr><td>#${o.id}</td><td>${o.name}<br><span class="muted">${o.email}</span></td><td>${o.date}</td><td>${fmt(o.total)}</td><td>${o.method}</td><td>${o.status}</td></tr>`).join('')||'<tr><td colspan="6">Aucune commande</td></tr>'}</table></div>`;
+  if(AD==='cust') body=`<table><tr><th>Nom</th><th>E-mail</th><th>Commandes</th></tr>
+    ${S.customers.map(c=>`<tr><td>${c.name}</td><td>${c.email}</td><td>${S.orders.filter(o=>o.email===c.email).length}</td></tr>`).join('')}</table>`;
+  if(AD==='cat') body=`<div class="pills">${CATS.map((c,i)=>`<span class="pill">${c} <a style="cursor:pointer" onclick="renameCat(${i})">✏️</a> <a style="cursor:pointer" onclick="delCat(${i})">🗑️</a></span>`).join('')}</div>
+    <input id="nc2" placeholder="Nouvelle catégorie" style="max-width:360px"><button class="btn sm" onclick="addCat()">Ajouter</button>`;
+  if(AD==='stat'){
+    const rev=S.orders.reduce((a,o)=>a+o.total,0);
+    body=`<div class="grid">
+      <div class="box feat"><b>${fmt(rev)}</b>Chiffre d'affaires</div>
+      <div class="box feat"><b>${S.orders.length}</b>Commandes</div>
+      <div class="box feat"><b>${S.customers.length}</b>Clients</div>
+      <div class="box feat"><b>${products.length}</b>Produits</div></div>`;
+  }
+  return `<h2>Tableau de bord administrateur</h2>
+  <div class="pills">${tabs.map(([k,l])=>`<button class="pill ${AD===k?'on':''}" onclick="AD='${k}';render()">${l}</button>`).join('')}</div>
+  <div class="box">${body}</div>`;
+}
+function editPrice(id){
+  const p=P(id);
+  const v=prompt('Nouveau prix (FCFA) :',p.price); if(v) p.price=+v;
+  const o=prompt('Ancien prix pour promotion (0 = aucune) :',p.old||0);
+  if(o!==null){p.old=+o||null; p.badge=p.old?'promo':p.badge;}
+  render();
+}
+function delP(id){
+  if(!confirm('Supprimer ce produit ?')) return;
+  products=products.filter(p=>p.id!==id); S.cart=S.cart.filter(i=>i.id!==id); render();
+}
+function addP(){
+  const name=$('nn').value.trim(), price=+$('npx').value;
+  if(!name||!price){alert('Nom et prix requis.');return;}
+  products.push({id:Date.now(),name,cat:$('nc').value,price,old:null,icon:$('ni').value||'📦',badge:'new',
+    rating:5,reviews:0,desc:$('nd').value||'Description à compléter.',file:$('nf').value||'fichier.pdf',preview:'Aperçu disponible'});
+  render();
+}
+function renameCat(i){
+  const v=prompt('Nouveau nom :',CATS[i]);
+  if(v){products.forEach(p=>{if(p.cat===CATS[i]) p.cat=v}); CATS[i]=v; render();}
+}
+function delCat(i){
+  if(products.some(p=>p.cat===CATS[i])) return alert('Catégorie non vide : déplacez ou supprimez ses produits d\'abord.');
+  CATS.splice(i,1); render();
+}
+function addCat(){const v=$('nc2').value.trim(); if(v&&!CATS.includes(v)){CATS.push(v); render();}}
+
+const PAGES={
+ about:['À propos',"EchoShop est une boutique dédiée aux produits numériques de qualité, pensée pour les débutants comme pour les créateurs et professionnels."],
+ faq:['FAQ',"Comment télécharger mon produit ? Après paiement, il est disponible immédiatement dans « Mes téléchargements » et dans l'e-mail de confirmation.<br><br>Quels moyens de paiement ? Cartes bancaires, PayPal, Orange Money, MTN Mobile Money et Wave."],
+ contact:['Contact',"Écrivez-nous à support@echoshop.ci. Réponse sous 24 h ouvrées."],
+ cgv:['Conditions générales de vente',"Les présentes CGV régissent les ventes de produits numériques réalisées sur EchoShop. [Texte juridique à faire valider par un professionnel du droit.]"],
+ privacy:['Politique de confidentialité',"EchoShop collecte uniquement les données nécessaires à la commande et à la livraison numérique. [À compléter selon la réglementation applicable.]"],
+ refund:['Politique de remboursement',"Les produits numériques étant livrés immédiatement, le remboursement n'est possible qu'en cas de fichier défectueux, sous 7 jours. [À valider juridiquement.]"]
+};
+function page(k){const [t,c]=PAGES[k]||PAGES.about; return `<div class="box" style="max-width:800px;margin:32px auto"><h1>${t}</h1><p>${c}</p></div>`;}
+
+/* ---------- Routeur ---------- */
+function render(){
+  const [path,qs]=(location.hash||'#/').slice(2).split('?');
+  const q=new URLSearchParams(qs||'');
+  const [r,arg]=(path||'').split('/');
+  const views={
+    '':home, shop:shop, search:()=>search(q.get('q')||''), product:()=>product(+arg),
+    cart:cart, checkout:checkout, confirm:()=>orderConfirm(+arg), account:account,
+    downloads:downloads, admin:admin, page:()=>page(arg)
+  };
+  $('app').innerHTML=(views[r]||home)();
+  cnt();
+  window.scrollTo(0,0);
+}
+window.onhashchange=render;
+render();
+</script>
+</body>
+</html>
